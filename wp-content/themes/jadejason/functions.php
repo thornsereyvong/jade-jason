@@ -44,7 +44,7 @@ function jadejason_setup() {
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
-		'menu-1' => esc_html__( 'Primary', 'jadejason' ),
+		'primary-nav' => esc_html__( 'Primary Nav', 'jadejason' ),
 	) );
 
 	/*
@@ -146,3 +146,23 @@ require get_template_directory() . '/inc/customizer.php';
  * Load Jetpack compatibility file.
  */
 require get_template_directory() . '/inc/jetpack.php';
+
+/**
+ * Load Facebook Open Graph
+ */
+require get_template_directory() . '/inc/inc.facebook-open-graph.php';
+
+/**
+ * Load Pagniation Function
+ */
+require get_template_directory() . '/inc/inc.pagination.php';
+
+/**
+ * Load Global Menu
+ */
+require get_template_directory() . '/inc/inc.menu.php';
+
+/**
+ * Load Bootstrap Nav Walker
+ */
+require get_template_directory() . '/inc/inc.wp_bootstrap_navwalker.php';

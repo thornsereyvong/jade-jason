@@ -5,65 +5,53 @@
 		  <div class="container">
 			<div class="row">
 			  <div class="col-sm-12">
-
-				<h2 class="shop-index__heading text-center">
-				  Present your products in a beautiful way
-				</h2>
-				<p class="text-center">
-				  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-				</p>
-
+				
+		<?php if(function_exists('ot_get_option') && (ot_get_option('title_pro') != '')) : ?>
+		<h2 class="shop-index__heading text-center"><?php echo ot_get_option('title_pro'); ?></h2>				
+		<?php
+			endif;
+			if(function_exists('ot_get_option') && (ot_get_option('description_pro') != '')) :												
+		?>
+		<p class="text-center"><?php echo ot_get_option('description_pro'); ?></p>				
+		<?php endif; ?>
+		
 			  </div>
 			</div> <!-- / .row -->
 			<div class="row">
+			
+			  <!-- start promotion -->
+			  
+			  <?php 
+				$args = array( 'post_type' => 'promotion', 'posts_per_page' => -1 );
+				$loop = new WP_Query( $args );
+				$index_pro=0;
+				while ( $loop->have_posts() ) : $loop->the_post();
+			?>	
+			  
 			  <div class="col-sm-4">
 				
 				<div class="shop-index-features__item">
 				  <div class="shop-index-features__icon">
-					<i class="fa fa-truck"></i>
+					<img alt="" src="<?php the_field('image'); ?>">
 				  </div>
 
 				  <h4 class="shop-index-features__heading">
-					MAN
+					<?php the_title(); ?>
 				  </h4>
 				  <p>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, perferendis et nostrum.
+					<?php the_field('description'); ?>
 				  </p>
-				</div> <!-- / .shop-index-features__item -->
+				</div>
 
 			  </div>
-			  <div class="col-sm-4">
-				
-				<div class="shop-index-features__item">
-				  <div class="shop-index-features__icon">
-					<i class="fa fa-shopping-bag"></i>
-				  </div>
-
-				  <h4 class="shop-index-features__heading">
-					WOMEN
-				  </h4>
-				  <p>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, perferendis et nostrum.
-				  </p>
-				</div> <!-- / .shop-index-features__item -->
-
-			  </div>
-			  <div class="col-sm-4">
-				
-				<div class="shop-index-features__item">
-				  <div class="shop-index-features__icon">
-					<i class="fa fa-gift"></i>
-				  </div>
-
-				  <h4 class="shop-index-features__heading">
-					KIDS
-				  </h4>
-				  <p>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, perferendis et nostrum.
-				  </p>
-				</div> <!-- / .shop-index-features__item -->
-
-			  </div>
+			  <!-- end promotion -->
+			  <?php
+					$index_pro++;
+					if($index_pro%3==0){ echo '<div class="clearfix"></div>';}
+				endwhile;
+				wp_reset_postdata();
+			?>
+			  
 			</div>
 		  </div> <!-- / .container -->
 		</section>

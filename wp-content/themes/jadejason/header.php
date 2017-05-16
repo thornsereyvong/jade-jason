@@ -21,7 +21,7 @@
 		<meta name="author" content="">
 		<link rel="shortcut icon" href="assets/ico/favicon.ico">
 
-		<title>Paperclip - Shop</title>		
+		<title>Home | JADE JASON </title>		
 
 		<!-- Google Fonts -->
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
@@ -51,7 +51,6 @@
 			</div> <!-- / .navbar-header -->
 			<div class="collapse navbar-collapse">
 			  <ul class="nav navbar-nav navbar-right">
-
 				<!-- General links -->
 				<li class="dropdown">
 				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home </a>				  
@@ -66,7 +65,7 @@
 				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Kids </a>				  
 				</li>
 				<!-- Navbar Search -->
-				<li class="hidden-xs">
+				<li class="hidden-xs" >
 				  
 				  <!-- Search toggle -->
 				  <a href="#" class="navbar-search__toggle">
