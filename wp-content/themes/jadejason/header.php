@@ -27,6 +27,9 @@
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
 		<?php wp_head(); ?>
+		
+		<script type="text/javascript" src="<?php echo get_template_directory_uri() . '/js/jquery.min.js'; ?>"></script>
+
 	  </head>
 	<body <?php body_class(); ?>>
 		<!-- NAVIGATION
@@ -44,7 +47,7 @@
 			  </button>
 			  
 			  <!-- Navbar brand -->
-			  <a class="navbar-brand" href="index-2.html">
+			  <a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 				<i class="fa fa-paperclip"></i> JADE JASON
 			  </a>
 
@@ -56,13 +59,13 @@
 				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home </a>				  
 				</li>
 				<li class="dropdown">
-				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Man </a>				  
+				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>products/man/?tab=all">Man </a>				  
 				</li>
 				<li class="dropdown">
-				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Women </a>				  
+				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>products/women/?tab=all">Women </a>				  
 				</li>
 				<li class="dropdown">
-				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Kids </a>				  
+				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>products/kids/?tab=all">Kids </a>				  
 				</li>
 				<!-- Navbar Search -->
 				<li class="hidden-xs" >

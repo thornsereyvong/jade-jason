@@ -27,44 +27,35 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-4 col-md-3">
-			<form class="shop__filter">
+			<form id="frmSearhPro" class="shop__filter">
 				<h3 class="headline">
 					<span>Price</span>
 				</h3>
 				<div class="radio">
-					<input type="radio" name="shop-filter__price"
-						id="shop-filter-price_1" value="" checked> <label
-						for="shop-filter-price_1">Under $25</label>
+					<input type="radio" name="fPrice" id="fprice_1" value="under25" checked> 
+					<label for="fprice_1">Under $25</label>
 				</div>
 				<div class="radio">
-					<input type="radio" name="shop-filter__price"
-						id="shop-filter-price_2" value=""> <label
-						for="shop-filter-price_2">$25 to $50</label>
+					<input type="radio" name="fPrice" id="fprice_2" value="25To50"> 
+					<label for="fprice_2">$25 to $50</label>
 				</div>
 				<div class="radio">
-					<input type="radio" name="shop-filter__price"
-						id="shop-filter-price_3" value=""> <label
-						for="shop-filter-price_3">$50 to $100</label>
+					<input type="radio" name="fPrice" id="fprice_3" value="50To100"> 
+					<label for="fprice_3">$50 to $100</label>
 				</div>
 				<div class="radio">
-					<input type="radio" name="shop-filter__price"
-						id="shop-filter-price_4" value="specify"> <label
-						for="shop-filter-price_4">Other (specify)</label>
+					<input type="radio" name="fPrice" id="fprice_4" value="specify"> 
+					<label for="fprice_4">Other (specify)</label>
 				</div>
 				<div class="form-group shop-filter__price">
 					<div class="row">
 						<div class="col-xs-4">
-							<label for="shop-filter-price_from" class="sr-only"></label> <input
-								id="shop-filter-price_from" type="number" min="0"
-								class="form-control" placeholder="From" disabled>
+							<label for="shop-filter-price_from" class="sr-only"></label> 
+							<input id="priceFrom" type="number" min="0" class="form-control" placeholder="From" disabled>
 						</div>
 						<div class="col-xs-4">
-							<label for="shop-filter-price_to" class="sr-only"></label> <input
-								id="shop-filter-price_to" type="number" min="0"
-								class="form-control" placeholder="To" disabled>
-						</div>
-						<div class="col-xs-4">
-							<button type="submit" class="btn btn-block btn-default" disabled>Go</button>
+							<label for="shop-filter-price_to" class="sr-only"></label> 
+							<input id="priceTo" type="number" min="0" class="form-control" placeholder="To" disabled>
 						</div>
 					</div>
 				</div>
@@ -79,7 +70,7 @@
 					foreach($size_pro as $s){ $index_size++;
 				?>
 				<div class="checkbox">
-					<input type="checkbox" value="<?php echo $s->name; ?>" id="<?php echo $s->name.'-'.$index_size;?>">
+					<input type="checkbox" name="fSize[]" value="<?php echo $s->name; ?>" id="<?php echo $s->name.'-'.$index_size;?>">
 					<label for="<?php echo $s->name.'-'.$index_size; ?>"><?php echo '['.$s->name.'] '.$s->description; ?></label>
 				</div>
 				<?php } ?>
@@ -94,7 +85,7 @@
 					foreach($color_pro as $c){ $index_color++;
 				?>				
 				<div class="checkbox">
-					<input  type="checkbox" value="<?php echo $c->name; ?>" id="<?php echo $c->name.'-'.$index_color;?>">					
+					<input  type="checkbox" name="fcolor[]" value="<?php echo $c->name; ?>" id="<?php echo $c->name.'-'.$index_color;?>">					
 					<label for="<?php echo $c->name.'-'.$index_color; ?>"><?php echo ' '.$c->name; ?></label>					
 				</div>				
 				<?php } ?>
@@ -109,26 +100,34 @@
 					foreach($brand_pro as $c){ $index_brand++;
 				?>				
 				<div class="checkbox">
-					<input  type="checkbox" value="<?php echo $c->name; ?>" id="<?php echo $c->name.'-'.$index_brand;?>">					
+					<input  type="checkbox" name="fbrand[]" value="<?php echo $c->name; ?>" id="<?php echo $c->name.'-'.$index_brand;?>">					
 					<label for="<?php echo $c->name.'-'.$index_brand; ?>"><?php echo ' '.$c->name; ?></label>					
 				</div>				
 				<?php } ?>
+				<br>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-xs-12  text-center">
+							<button type="button" id="btnSearchPro" class="btn btn-block btn-primary">Search</button>
+						</div>
+					</div>
+				</div>
+				
 			</form>
 		</div>
 		
 		<div class="col-sm-8 col-md-9">
 			<!-- Filters -->
-			<ul class="shop__sorting">
+			<ul class="shop__sorting" id="typeProductclk">
 				<?php 
 					$status = get_field_object('status');
+					$status_val = $_GET['tab'];
 					if( $status ): 
-						$i=0;
-						foreach ($status['choices'] as $s){
-							if($i==0)
-								echo '<li class="active"><a href="#">'.$s.'</a></li>';
+						foreach ($status['choices'] as $k => $s){
+							if($status_val==$k)
+								echo '<li data-val="'.$k.'" class="active"><a href="#">'.$s.'</a></li>';
 							else
-								echo '<li><a href="#">'.$s.'</a></li>';
-							$i++;
+								echo '<li data-val="'.$k.'"><a href="#">'.$s.'</a></li>';							
 						}
 					endif;
 				?>
@@ -265,10 +264,92 @@
 	
 				</div>
 			</div>
-			<!-- / .row -->
-	
 		</div>
-		<!-- / .col-sm-8 -->
 	</div>
-	<!-- / .row -->
 </div>
+
+<script type="text/javascript">
+	function aliasString(str){
+		str = str.replace("(", "");
+		str = str.replace(")", "");
+		str = str.replace("  ", "");
+		str = str.replace(" ", "-");
+		return str;
+	}
+	function getParameterByName(name, url) {
+	    if (!url) url = window.location.href;
+	    name = name.replace(/[\[\]]/g, "\\$&");
+	    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+	        results = regex.exec(url);
+	    if (!results) return null;
+	    if (!results[2]) return '';
+	    return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+	function updateQueryStringParameter(key, value) {
+		var uri = window.location.href;
+	  	var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+	  	var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+	  	if (uri.match(re)) {
+	    	return uri.replace(re, '$1' + key + "=" + value + '$2');
+	  	}else {
+	    	return uri + separator + key + "=" + value;
+	  	}
+	}
+	$(function(){
+		$("#typeProductclk li").click(function(){
+			var type = $(this).attr("data-val");
+			var url = updateQueryStringParameter('tab', type);
+			window.location.href = url;
+		});
+
+		$("#btnSearchPro").click(function(){
+			var price = $('input[name=fPrice]:checked', '#frmSearhPro').val();
+			if(price == "specify"){
+				var fp = Number($.trim($("#priceFrom").val()));
+				var tp = Number($.trim($("#priceTo").val()));
+				price = "&fromprice="+fp+"&toprice="+tp;
+			}else if(price == "under25"){
+				price = "&fromprice=0&toprice=25";
+			}else if(price == "25To50"){
+				price = "&fromprice=25&toprice=50";
+			}else if(price == "50To100"){
+				price = "&fromprice=50&toprice=100";
+			}else{
+				price = "&fromprice=all&toprice=all";
+			}
+			
+			var size = "";
+			var i=0;
+		 	$("input[name='fSize[]']:checked").each( function () {i++;
+				size += "&fsize"+i+"="+$(this).val();
+		 	});
+
+			var color = "";
+			i=0;
+		 	$("input[name='fcolor[]']:checked").each( function () {i++;
+		 		color += "&fcolor"+i+"="+$(this).val();
+		 	});
+
+		 	var brand = "";
+			i=0;
+		 	$("input[name='fbrand[]']:checked").each( function () {i++;
+		 		brand += "&fbrand"+i+"="+$(this).val();
+		 	});
+		});
+
+		$('input[name=fPrice]').change(function(){
+			var price = $('input[name=fPrice]:checked', '#frmSearhPro').val();
+			if(price == 'specify'){
+				$("#priceFrom").prop('disabled', false);
+				$("#priceTo").prop('disabled', false);
+			}else{
+				$("#priceFrom").prop('disabled', true);
+				$("#priceTo").prop('disabled', true);
+				$("#priceFrom").val('');
+				$("#priceTo").val('');
+			}
+		});
+		
+	});
+</script>
+
