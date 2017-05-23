@@ -29,7 +29,44 @@
 		<?php wp_head(); ?>
 		
 		<script type="text/javascript" src="<?php echo get_template_directory_uri() . '/js/jquery.min.js'; ?>"></script>
-
+		<style>
+			.ipagination {
+			    display: inline-block;
+			}
+			
+			.ipagination a {
+			    color: black;
+			    float: left;
+			   	padding: 5px 12px;
+			    text-decoration: none;
+			    transition: background-color .3s;
+			    border: 1px solid #ddd;
+			}
+			
+			.ipagination a.current, span.current {
+			    background-color: #ed3e49;
+			    color: white;
+			    border: 1px solid #ed3e49;
+			}
+			
+			.ipagination a:hover:not(.current),span:hover:not(.current)  {background-color: #ddd;}
+			
+			
+			.ipagination span {
+			    color: black;
+			    float: left;
+			    padding: 5px 12px;
+			    text-decoration: none;
+			    transition: background-color .3s;
+			    border: 1px solid #ddd;
+			}
+			.ipagination span.current {
+			    background-color: #ed3e49;
+			    color: white;
+			    border: 1px solid #ed3e49;
+			}
+			.ipagination span:hover:not(.current)  {background-color: #ddd;}
+		</style>
 	  </head>
 	<body <?php body_class(); ?>>
 		<!-- NAVIGATION
@@ -54,19 +91,17 @@
 			</div> <!-- / .navbar-header -->
 			<div class="collapse navbar-collapse">
 			  <ul class="nav navbar-nav navbar-right">
-				<!-- General links -->
-				<li class="dropdown">
-				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home </a>				  
-				</li>
-				<li class="dropdown">
-				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>products/man/?tab=all">Man </a>				  
-				</li>
-				<li class="dropdown">
-				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>products/women/?tab=all">Women </a>				  
-				</li>
-				<li class="dropdown">
-				  <a href="<?php echo esc_url( home_url( '/' ) ); ?>products/kids/?tab=all">Kids </a>				  
-				</li>
+			  
+			  	<?php 
+					wp_nav_menu(
+						array(
+							'theme_location' => 'primary-nav',
+							'container' => false,
+							'menu_class' => 'nav navbar-nav'
+						)
+					);
+				?>
+			  
 				<!-- Navbar Search -->
 				<li class="hidden-xs" >
 				  

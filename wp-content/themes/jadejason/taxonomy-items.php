@@ -10,12 +10,7 @@ get_header ();
 ?>
 
 <?php 
-	// check post type
-	if(is_tax("tax_test") || is_tax("products")){
-		require get_template_directory() . '/archive-products.php';
-	}else{
-		echo "ddd";
-	}
+	require get_template_directory() . '/archive-products.php';
 ?>
 
 <?php

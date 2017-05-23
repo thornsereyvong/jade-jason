@@ -120,8 +120,12 @@
 			<!-- Filters -->
 			<ul class="shop__sorting" id="typeProductclk">
 				<?php 
-					$status = get_field_object('status');
+					$status = get_field_object('status');					
 					$status_val = $_GET['tab'];
+					if($status_val == ""){
+						$status_val = "all";
+					}
+					
 					if( $status ): 
 						foreach ($status['choices'] as $k => $s){
 							if($status_val==$k)
@@ -134,134 +138,89 @@
 			</ul>
 	
 			<div class="row">
-				<div class="col-sm-6 col-md-4">
-	
-					<div class="shop__thumb">
-						<a href="#">
-	
-							<div class="shop-thumb__img">
-								<img src="<?php echo get_bloginfo( 'stylesheet_directory' );?>/assets/img/shop-item_1.jpg" class="img-responsive"
-									alt="...">
-							</div>
-	
-							<h5 class="shop-thumb__title">Product Title</h5>
-	
-							<div class="shop-thumb__price">
-								<span class="shop-thumb-price_old">$80.99</span> <span
-									class="shop-thumb-price_new">$59.99</span>
-							</div>
-	
-						</a>
-					</div>
-	
-				</div>
-				<div class="col-sm-6 col-md-4">
-	
-					<div class="shop__thumb">
-						<a href="#">
-	
-							<div class="shop-thumb__img">
-								<img src="<?php echo get_bloginfo( 'stylesheet_directory' );?>/assets/img/shop-item_2.jpg" class="img-responsive"
-									alt="...">
-							</div>
-	
-							<h5 class="shop-thumb__title">Product Title</h5>
-	
-							<div class="shop-thumb__price">$59.99</div>
-	
-						</a>
-					</div>
-	
-				</div>
-				<div class="col-sm-6 col-md-4">
-	
-					<div class="shop__thumb">
-						<a href="#">
-	
-							<div class="shop-thumb__img">
-								<img src="<?php echo get_bloginfo( 'stylesheet_directory' );?>/assets/img/shop-item_3.jpg" class="img-responsive"
-									alt="...">
-							</div>
-	
-							<h5 class="shop-thumb__title">Product Title</h5>
-	
-							<div class="shop-thumb__price">$59.99</div>
-	
-						</a>
-					</div>
-	
-				</div>
-				<div class="col-sm-6 col-md-4">
-	
-					<div class="shop__thumb">
-						<a href="#">
-	
-							<div class="shop-thumb__img">
-								<img src="<?php echo get_bloginfo( 'stylesheet_directory' );?>/assets/img/shop-item_4.jpg" class="img-responsive"
-									alt="...">
-							</div>
-	
-							<h5 class="shop-thumb__title">Product Title</h5>
-	
-							<div class="shop-thumb__price">$59.99</div>
-	
-						</a>
-					</div>
-	
-				</div>
-				<div class="col-sm-6 col-md-4">
-	
-					<div class="shop__thumb">
-						<a href="#">
-	
-							<div class="shop-thumb__img">
-								<img src="<?php echo get_bloginfo( 'stylesheet_directory' );?>/assets/img/shop-item_5.jpg" class="img-responsive"
-									alt="...">
-							</div>
-	
-							<h5 class="shop-thumb__title">Product Title</h5>
-	
-							<div class="shop-thumb__price">$59.99</div>
-	
-						</a>
-					</div>
-	
-				</div>
-				<div class="col-sm-6 col-md-4">
-	
-					<div class="shop__thumb">
-						<a href="#">
-	
-							<div class="shop-thumb__img">
-								<img src="<?php echo get_bloginfo( 'stylesheet_directory' );?>/assets/img/shop-item_6.jpg" class="img-responsive"
-									alt="...">
-							</div>
-	
-							<h5 class="shop-thumb__title">Product Title</h5>
-	
-							<div class="shop-thumb__price">$59.99</div>
-	
-						</a>
-					</div>
-	
-				</div>
+				
+				<?php
+				
+					$cur_page = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+					/* $meuri = $_SERVER['REQUEST_URI'];
+					$meuri = split('[/.-]', $meuri);
+					$cpage = 1;
+					$p = "";
+					foreach ($meuri as $u){
+						if($p == "page"){
+							$cpage = $u;
+						}
+						$p = $u;
+					}
+					$p = false; */
+					$arge = array(
+							'post_type' => 'product',
+							'posts_per_page' => 1,
+							'paged' => $cur_page,
+							'tax_query' => array(
+									array(
+											'taxonomy' => 'products',
+											'field' => 'id',
+											'terms' => array($obj->term_id)
+											//'terms' => array(5)
+									)
+							),
+							'meta_query'	=> array(
+									'relation'		=> 'AND',											
+									array(
+											'key'		=> 'active',
+											'value'		=> true,
+											'compare'	=> '='
+									),
+									array('key' => 'status',
+											'value' => $status_val,
+											'compare' => 'LIKE'
+									)
+							)
+					);
+					$lastProduct = new WP_Query($arge);
+					$wp_query = $lastProduct;
+					if($lastProduct->have_posts()) :						 
+						while($lastProduct->have_posts()) : $lastProduct->the_post();
+							get_template_part('template-parts/content', 'product-4');						
+						endwhile;
+					else :
+						//get_template_part( 'template-parts/content', 'none' );
+					endif;
+					wp_reset_postdata();
+				?>
 			</div>
 			<!-- / .row -->
 	
 			<!-- Pagination -->
 			<div class="row">
 				<div class="col-sm-12">
-	
-					<ul class="pagination pull-right">
-						<li class="disabled"><a href="#">&laquo;</a></li>
-						<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">&raquo;</a></li>
-					</ul>
-	
+					<div class='ipagination pull-right'>
+						<?php 
+							/* echo paginate_links(array(
+								'total' => $lastProduct->max_num_pages
+							)); */
+						?>
+						
+						<?php 
+							$total_pages = $wp_query->max_num_pages; 							
+							if ($total_pages > 1){							
+							$current_page = max(1, get_query_var('paged')); 
+							
+							echo paginate_links(array( 
+							'base' => get_pagenum_link(1) . '%_%', 
+							'format' => '/page/%#%/', 
+							'current' => $current_page, 
+							'total' => $total_pages, 
+							'before_page_number' => '<div class="pagination-navigation">', 
+							'after_page_number' => '</div>' 
+							
+							)); 
+							} 
+							?>
+						
+						
+					</div>
 				</div>
 			</div>
 		</div>

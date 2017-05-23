@@ -7677,7 +7677,7 @@ footer:before {
 .headline {
   display: block;
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   font-size: 18px;
 }
 .headline:before {
