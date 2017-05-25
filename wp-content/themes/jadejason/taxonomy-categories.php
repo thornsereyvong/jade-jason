@@ -153,7 +153,7 @@
 							'paged' => $cur_page,
 							'tax_query' => array(
 									array(
-											'taxonomy' => 'products',
+											'taxonomy' => 'categories',
 											'field' => 'id',
 											'terms' => array($obj->term_id)
 											//'terms' => array(5)

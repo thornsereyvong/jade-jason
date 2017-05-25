@@ -1,9 +1,6 @@
 <?php 
 	$obj = get_queried_object();
 ?>
-
-	
-
 <!-- TOPIC HEADER
     ================================================== -->
     <div class="topic">
@@ -197,29 +194,10 @@
 				<div class="col-sm-12">
 					<div class='ipagination pull-right'>
 						<?php 
-							/* echo paginate_links(array(
+							echo paginate_links(array(
 								'total' => $lastProduct->max_num_pages
-							)); */
+							));
 						?>
-						
-						<?php 
-							$total_pages = $wp_query->max_num_pages; 							
-							if ($total_pages > 1){							
-							$current_page = max(1, get_query_var('paged')); 
-							
-							echo paginate_links(array( 
-							'base' => get_pagenum_link(1) . '%_%', 
-							'format' => '/page/%#%/', 
-							'current' => $current_page, 
-							'total' => $total_pages, 
-							'before_page_number' => '<div class="pagination-navigation">', 
-							'after_page_number' => '</div>' 
-							
-							)); 
-							} 
-							?>
-						
-						
 					</div>
 				</div>
 			</div>
