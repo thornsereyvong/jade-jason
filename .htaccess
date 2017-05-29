@@ -7,6 +7,7 @@ RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /jade-jason/index.php [L]
+#RewriteRule . /jade-jason/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ taxonomy-categories.php?slug=1&term=2&page=3&pagenum=4 [L]
 </IfModule>
 
 # END WordPress

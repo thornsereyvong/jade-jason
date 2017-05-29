@@ -1,6 +1,5 @@
-
 <?php		
-	$category = get_categories(array('taxonomy'=>'products', 'parent'=>'0'));	
+	$category = get_categories(array('taxonomy'=>'categories', 'parent'=>'0'));	
 	$y =0;
 	foreach($category as $cat){	 $y++;
 		$cat_id =  $cat->cat_ID;
@@ -9,7 +8,7 @@
 				'posts_per_page' => 10,
 				'tax_query' => array(
 						array(
-								'taxonomy' => 'products',
+								'taxonomy' => 'categories',
 								'field' => 'id',
 								'terms' => array($cat_id)
 						)
@@ -43,7 +42,7 @@
 				  <?php echo $cat->category_description;?>
 				</p>
 			  </div>
-			</div> <!-- / .row -->
+			</div>
 			<div class="row">
 			
 			<?php						 
@@ -52,11 +51,9 @@
 				endwhile;				
 			?> 
 			 
-			</div> <!-- / .row -->
-		  </div> <!-- / .container -->
+			</div>
+		  </div>
 		</section>
-
-
 <?php
 		endif;
 		wp_reset_postdata();

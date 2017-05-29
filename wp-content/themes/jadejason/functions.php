@@ -123,11 +123,11 @@ function jadejason_scripts() {
 add_action( 'wp_enqueue_scripts', 'jadejason_scripts' );
 
 
-add_action( 'pre_get_posts', function($q) {
-	if( !is_admin() && $q->is_main_query() && !$q->is_tax() ) {
-		$q->set ('post_type', array( 'post', 'product' ) );
+/* add_action( 'pre_get_posts', function($q) {
+	if( !is_admin() && $q->is_main_query() && $q->is_tax() ) {
+		$q->set ('post_type', array( 'post', 'categories' ) );
 	}
-});
+}); */
 /**
  * Implement the Custom Header feature.
  */
